@@ -1,1 +1,5 @@
 *.csv
+# ↑ Data is available on request.
+
+charts/*
+wav_outputs/*.wav
