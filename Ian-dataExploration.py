@@ -1,15 +1,13 @@
 import seaborn as sns
-import matplotlib as matplotlib
 import matplotlib.pyplot as plt
 from datetime import datetime
 import pandas as pd
 import numpy as np
+from numpy.fft import fft
 from scipy.stats import shapiro
 from scipy.stats import levene
 import scipy.signal as signal
 import folium
-import csv
-import pywt
 
 ###Select which data file you are working with:
 data = pd.read_csv("eclipseData.csv") ##Original Data
@@ -400,15 +398,15 @@ def butterworth_filter(balloonName, order=2):
     tempData = tempData[10:]##removing the first 10 entries because it is very skewed in butterworth
 
     ### Unhide the following code if you want to view a graph of the temperature data vs the butterworth filter.
-##    plt.figure(figsize=(12, 6))
-##    plt.plot(time, tempData, label='Original Data')
-##    plt.plot(time, filtered_data, label='Filtered Data')
-##    plt.xlabel('Time')
-##    plt.ylabel('Temperature')
-##    plt.legend()
-##    plt.title(balloonName[2]+' Butterworth Low-Pass Filter')
-##    plt.grid(True)
-##    plt.show()
+    # plt.figure(figsize=(12, 6))
+    # plt.plot(time, tempData, label='Original Data')
+    # plt.plot(time, filtered_data, label='Filtered Data')
+    # plt.xlabel('Time')
+    # plt.ylabel('Temperature')
+    # plt.legend()
+    # plt.title(balloonName[2]+' Butterworth Low-Pass Filter')
+    # plt.grid(True)
+    # plt.show()
 
 
     return filtered_data
@@ -440,7 +438,6 @@ def fftNumPy(filtered_data, balloonName):
 
 
 #This function applies a Fast Fourier Transform to the filteres temperature data. Using code from https://pythonnumericalmethods.studentorg.berkeley.edu/notebooks/chapter24.04-FFT-in-Python.html
-from numpy.fft import fft, ifft
 def fftFunction(x, balloonName):
     sr = 0.5
     ts = 1.0/sr
@@ -555,10 +552,10 @@ def plot_lat_lon(balloonName, balloonName1,
 ###The next function is the linear interpolation code from Charlie.
 ###When this function is ran once, a new file with dataset will be created, and you must reference that file instead to work with interpolated data.
 # Fix the few stray stings in "PercentTotality" to be numeric values.
-    data.loc[:, "PercentTotality"] = pd.to_numeric(data["PercentTotality"], errors="coerce").fillna(-1)
+data.loc[:, "PercentTotality"] = pd.to_numeric(data["PercentTotality"], errors="coerce").fillna(-1)
 
-    # Ensure 'Timestamp' is of type datetime. Used for pd.date_range later
-    data['Timestamp'] = pd.to_datetime(data['Timestamp'])
+# Ensure 'Timestamp' is of type datetime. Used for pd.date_range later
+data['Timestamp'] = pd.to_datetime(data['Timestamp'])
 
 # Group by balloon, enforce timestamps to actually arrive exactly every 2 seconds
 # Fill in data for created timestamps using linear interpolation.
