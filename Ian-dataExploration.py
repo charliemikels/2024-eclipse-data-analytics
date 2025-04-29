@@ -9,6 +9,9 @@ from scipy.stats import levene
 import scipy.signal as signal
 import folium
 
+import os
+os.makedirs('charts', exist_ok=True)
+
 ###Select which data file you are working with:
 data = pd.read_csv("eclipseData.csv") ##Original Data
 #data = read_csv("interpolated.csv") ##Interpolated Data
@@ -152,11 +155,11 @@ IMSPreInterpolatedSubset36k = [36421, 37647, 'IMS Pre +36,000 ft']
 
 #This function gets data from specified balloons and calls functions.
 #This is used specifically for the following three functions
-def getBalloonData (Name):
+def getBalloonData(Name):
     #Get specific data and put into ariable names
     altitude = data['AltImputed'][Name[0]:Name[1]].tolist()
     temperature = data['TempImputed'][Name[0]:Name[1]].tolist()
-    acceleration = data['AccelImputed'][Name[0]:Name[1]].tolist()
+    # acceleration = data['AccelImputed'][Name[0]:Name[1]].tolist()
     time = data['Timestamp'][Name[0]:Name[1]].tolist()
     print(Name[2])
 
@@ -204,7 +207,8 @@ def tempVsAltPlot(altitude, temperature, time, name):
     plt.gca().xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter('%H:%M'))
 
     plt.suptitle(name)
-    plt.show()
+    plt.savefig(f"charts/temp_vs_alt_{name.replace(" ", "_").replace("/", "_")}")
+    plt.close()
 
 
 #Shapiro test function
@@ -235,67 +239,68 @@ def levenesTest(balloonName1, balloonName2):
         'Balloon': ['IMS Pre'] * len(temperature1) + ['IMS During'] * len(temperature2)
     })
     sns.boxplot(x="Balloon", y='Temperature (F)', data=df, showmeans=True)
-    plt.title('IMS Pre and IMS During Temperature Distribution')
-    plt.show()
+    title = 'IMS Pre and IMS During Temperature Distribution'
+    plt.title(title)
+    plt.savefig(f"charts/levenes_test_{title.replace(" ", "_").replace("/", "_")}")
+    plt.close()
 
 
 
 
 
 ##These are the calls to getBalloonData, where we can generate charts and run tests.
+getBalloonData(IMSDuring50min)
+getBalloonData(IMSPre50min)
+getBalloonData(AMADuring) #BAD ALTITUDE DATA
+getBalloonData(AMAPre)
+getBalloonData(Eastbrook)
+getBalloonData(GRCC)
+getBalloonData(IMSDuring)
+getBalloonData(IMSPre)
+getBalloonData(INAcademy)
+getBalloonData(LintonS)
+getBalloonData(NSEUpland)
+getBalloonData(PFWEdu)
+getBalloonData(PFWEng)
+getBalloonData(Stockbridge)
+getBalloonData(TaylorU)
+getBalloonData(USI)
+
+getBalloonData(IMSPreAscent)
+getBalloonData(IMSDuringAscent)
+
+getBalloonData(IMSPre40k)
+getBalloonData(IMSDuring40k)
+
+getBalloonData(IMSDuring50k)
+getBalloonData(IMSPre50k)
+getBalloonData(NSEUpland50k)
+getBalloonData(PFWEdu50k)
+getBalloonData(TaylorU50k)
+
+getBalloonData(Eastbrook30Min)
+getBalloonData(GRCC30Min)
+getBalloonData(IMSDuring30Min)
+getBalloonData(NSEUpland30Min)
+getBalloonData(PFWEdu30Min)
+getBalloonData(Stockbridge30Min)
+
 ##
-##getBalloonData(IMSDuring50min)
-##getBalloonData(IMSPre50min)
-##getBalloonData(AMADuring) #BAD ALTITUDE DATA
-##getBalloonData(AMAPre)
-##getBalloonData(Eastbrook)
-##getBalloonData(GRCC)
-##getBalloonData(IMSDuring)
-##getBalloonData(IMSPre)
-##getBalloonData(INAcademy)
-##getBalloonData(LintonS)
-##getBalloonData(NSEUpland)
-##getBalloonData(PFWEdu)
-##getBalloonData(PFWEng)
-##getBalloonData(Stockbridge)
-##getBalloonData(TaylorU)
-##getBalloonData(USI)
+levenesTest(IMSPre40k, IMSDuring40k)
+levenesTest(IMSPre50k, NSEUpland50k)
+levenesTest(IMSPre50k, PFWEdu50k)
+levenesTest(IMSPre50k, TaylorU50k)
 
-##getBalloonData(IMSPreAscent)
-##getBalloonData(IMSDuringAscent)
-
-##getBalloonData(IMSPre40k)
-##getBalloonData(IMSDuring40k)
-
-##getBalloonData(IMSDuring50k)
-##getBalloonData(IMSPre50k)
-##getBalloonData(NSEUpland50k)
-##getBalloonData(PFWEdu50k)
-##getBalloonData(TaylorU50k)
-
-##getBalloonData(Eastbrook30Min)
-##getBalloonData(GRCC30Min)
-###getBalloonData(IMSDuring30Min)
-##getBalloonData(NSEUpland30Min)
-##getBalloonData(PFWEdu30Min)
-##getBalloonData(Stockbridge30Min)
-
-##
-#evenesTest(IMSPre40k, IMSDuring40k)
-##levenesTest(IMSPre50k, NSEUpland50k)
-##levenesTest(IMSPre50k, PFWEdu50k)
-##levenesTest(IMSPre50k, TaylorU50k)
-
-##getBalloonData(EastbrookInterpolated)
-##getBalloonData(GRCCInterpolated)
-##getBalloonData(IMSDuringInterpolated)
-##getBalloonData(NSEUplandInterpolated)
-##getBalloonData(PFWEduInterpolated)
-##getBalloonData(StockbridgeInterpolated)
+getBalloonData(EastbrookInterpolated)
+getBalloonData(GRCCInterpolated)
+# getBalloonData(IMSDuringInterpolated)
+# getBalloonData(NSEUplandInterpolated)
+# getBalloonData(PFWEduInterpolated)
+# getBalloonData(StockbridgeInterpolated)
 
 
-##getBalloonData(IMSDuringInterpolatedSubset36k)
-##getBalloonData(IMSPreInterpolatedSubset36k)
+# getBalloonData(IMSDuringInterpolatedSubset36k)
+# getBalloonData(IMSPreInterpolatedSubset36k)
 
 
 
@@ -336,11 +341,12 @@ def temperatureVsTime(balloonName1):#, balloonName2, balloonName3):
     #plt.ylabel("Wind Speed (m/s)")
     plt.title(balloonName1[2])#+" vs "+balloonName2[2]+" vs "+balloonName3[2])
     #leg = plt.legend(loc='upper center')
-    # Display the graph
-    plt.show()
+    # Save the graph
+    plt.savefig(f"charts/temp_vs_time_{balloonName1.replace(" ", "_").replace("/", "_")}")
+    plt.close()
 
 #temperatureVsTime(IMSDuring, Eastbrook, GRCC)
-#temperatureVsTime(IMSDuringInterpolatedStratosphere)
+# temperatureVsTime(IMSDuringInterpolatedStratosphere)
 
 
 
@@ -432,7 +438,8 @@ def fftNumPy(filtered_data, balloonName):
     plt.xlim(0.001, 0.01)
     plt.ylim(0, 4000)
     plt.grid(True)
-    plt.show()
+    plt.savefig(f"charts/fft_(numpy)_{balloonName[2].replace(" ", "_").replace("/", "_")}")
+    plt.close()
 
     return positive_frequencies, positive_amplitudes
 
@@ -459,16 +466,16 @@ def fftFunction(x, balloonName):
     plt.xlim(0.001, 0.01)
     plt.ylim(0,2500)
     plt.suptitle(balloonName[2], fontsize=14)
-    plt.show()
+    plt.savefig(f"charts/fft_(function)_{balloonName[2].replace(" ", "_").replace("/", "_")}")
+    plt.close()
 
-#selections = [balloonNames]
-##for name in selections:
-##    filtered_data = butterworth_filter(name)
-##    ###Pick which FFT implementation to use (Recommend fftFunction). Both seem to have about the same result,
-##        #fftFunction graphs using more of a bar chart for visualization, whereas fftNumPy uses a line graph.
-##    fftFunction(filtered_data,name)
-##    #fftNumPy(filtered_data,name)
-##
+selections = [IMSPre, IMSDuring]
+for name in selections:
+   filtered_data = butterworth_filter(name)
+   ###Pick which FFT implementation to use (Recommend fftFunction). Both seem to have about the same result,
+       # fftFunction graphs using more of a bar chart for visualization, whereas fftNumPy uses a line graph.
+   fftFunction(filtered_data,name)
+   fftNumPy(filtered_data,name)
 
 
 
@@ -542,9 +549,9 @@ def plot_lat_lon(balloonName, balloonName1,
     m.get_root().html.add_child(folium.Element(legend_html))
 
     # Save the map
-    m.save('balloon.html')
+    m.save('charts/balloon.html')
 
-#plot_lat_lon(IMSPre, IMSDuring)
+plot_lat_lon(IMSPre, IMSDuring)
 
 
 
