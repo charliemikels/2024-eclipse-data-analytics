@@ -1,0 +1,14 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: "Mikels"
+    given-names: "Charlie"
+  - family-names: "Oatis"
+    given-names: "Iam"
+  - family-names: "Elliot"
+    given-names: "Ethan"
+  - family-names: "Sosnowski"
+    given-names: "Ethan"
+title: "2024 Eclipse Data Analytics"
+version: 1.0.0
+date-released: 2025-05-29
