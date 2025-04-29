@@ -9,16 +9,17 @@ The original dataset is not included. It is available on request from NearSpace 
 The included scripts were written with Python v3.13.3 and utilize these libraries:
 
 - `pandas`
-- `matplotlib`
 - `numpy`
 - `scipy`
 - `PyWavelets`
+- `matplotlib`
+- `seaborn`
 - `folium`
 
 You can install them all at once using pip:
 
 ```sh
-pip install pandas matplotlib numpy scipy PyWavelets
+pip install pandas numpy scipy PyWavelets matplotlib seaborn folium
 ```
 
 ## Acknowledgements
