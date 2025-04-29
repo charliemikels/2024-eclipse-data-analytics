@@ -447,7 +447,7 @@ def fftNumPy(filtered_data, balloonName):
 #This function applies a Fast Fourier Transform to the filteres temperature data. Using code from https://pythonnumericalmethods.studentorg.berkeley.edu/notebooks/chapter24.04-FFT-in-Python.html
 def fftFunction(x, balloonName):
     sr = 0.5
-    ts = 1.0/sr
+    # ts = 1.0/sr
 
     X = fft(x)
     N = len(X)
@@ -455,7 +455,7 @@ def fftFunction(x, balloonName):
     T = N/sr
     freq = n/T
 
-    t = np.arange(0,2*N,ts)
+    # t = np.arange(0,2*N,ts)
 
     plt.figure(figsize = (12, 6))
 
