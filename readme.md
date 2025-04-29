@@ -13,6 +13,7 @@ The included scripts were written with Python v3.13.3 and utilize these librarie
 - `numpy`
 - `scipy`
 - `PyWavelets`
+- `folium`
 
 You can install them all at once using pip:
 
