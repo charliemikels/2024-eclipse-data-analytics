@@ -6,7 +6,7 @@ The original dataset is not included. It is available on request from NearSpace 
 
 ## Requirements
 
-The included scripts utilize these libraries:
+The included scripts were written with Python v3.13.3 and utilize these libraries:
 
 - `pandas`
 - `matplotlib`
