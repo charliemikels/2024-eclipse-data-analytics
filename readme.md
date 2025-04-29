@@ -1,4 +1,4 @@
-This repo is a public copy from Taylor University's GitLab. It includes scripts that were used to analize the 2024 total solar eclipse, and were writen by Charlie Mikels, Ian Oatis, Ethan Elliott, and Ethan Sosnowski.
+This repo is a public copy from Taylor University's GitLab. It includes scripts that were used to analyze the 2024 total solar eclipse, and were written by Charlie Mikels, Ian Oatis, Ethan Elliott, and Ethan Sosnowski, with Dr. Fola Ayano and Dr. Amish Mishra.
 
 See the paper _Investigating Stabilization in Lower Stratospheric Temperature and Atmospheric Gravity Waves During the April 8, 2024, Total Solar Eclipse_ for more information.
 
@@ -22,7 +22,7 @@ You can install them all at once using pip:
 pip install pandas numpy scipy PyWavelets matplotlib seaborn folium
 ```
 
-## Acknowledgements
+## Acknowledgments
 
 > This research was supported by the Indiana Space Grant Consortium. The data was collected by NearSpace Launch
 > and NearSpace Education with data cleaning handled by Taylor University interns Hannah Pefley, Kristine Lee, and
