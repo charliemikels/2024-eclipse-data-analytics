@@ -2,7 +2,7 @@ import seaborn as sns
 import matplotlib as matplotlib
 import matplotlib.pyplot as plt
 from datetime import datetime
-from pandas import *
+import pandas as pd
 import numpy as np
 from scipy.stats import shapiro
 from scipy.stats import levene
@@ -12,7 +12,7 @@ import csv
 import pywt
 
 ###Select which data file you are working with:
-data = read_csv("eclipseData.csv") ##Original Data
+data = pd.read_csv("eclipseData.csv") ##Original Data
 #data = read_csv("interpolated.csv") ##Interpolated Data
 #data = read_csv("interpolated_with_wind.csv") ##Interpolated Data With Wind
 
@@ -232,7 +232,7 @@ def levenesTest(balloonName1, balloonName2):
     print(len(temperature1))
     print(len(temperature2))
 
-    df = DataFrame({
+    df = pd.DataFrame({
         'Temperature (F)': np.concatenate([temperature1, temperature2]),
         'Balloon': ['IMS Pre'] * len(temperature1) + ['IMS During'] * len(temperature2)
     })
@@ -555,10 +555,11 @@ def plot_lat_lon(balloonName, balloonName1,
 ###The next function is the linear interpolation code from Charlie.
 ###When this function is ran once, a new file with dataset will be created, and you must reference that file instead to work with interpolated data.
 # Fix the few stray stings in "PercentTotality" to be numeric values.
-    data.loc[:, "PercentTotality"] = to_numeric(data["PercentTotality"], errors="coerce").fillna(-1)
+    data.loc[:, "PercentTotality"] = pd.to_numeric(data["PercentTotality"], errors="coerce").fillna(-1)
 
     # Ensure 'Timestamp' is of type datetime. Used for pd.date_range later
-    df['Timestamp'] = to_datetime(df['Timestamp'])
+    data['Timestamp'] = pd.to_datetime(data['Timestamp'])
+
 # Group by balloon, enforce timestamps to actually arrive exactly every 2 seconds
 # Fill in data for created timestamps using linear interpolation.
 # Remove original data that does not line up on the 2 second intervals
@@ -573,14 +574,14 @@ def interpolate_balloons_to_two_second_intervals(df):
         # Create timestamp range with 2 second intervals
         start_time = balloon_df['Timestamp'].min()
         end_time = balloon_df['Timestamp'].max()
-        complete_timestamps = date_range(start=start_time, end=end_time, freq='2s')
+        complete_timestamps = pd.date_range(start=start_time, end=end_time, freq='2s')
 
         # Create new dataframe with complete timestamps
-        populated_timestamps_df = DataFrame({'Timestamp': complete_timestamps})
+        populated_timestamps_df = pd.DataFrame({'Timestamp': complete_timestamps})
         populated_timestamps_df['Balloon'] = balloon_name
 
         # Combine original data and new timestamps. Creates columns and nulls to match original data.
-        merged_df = merge(
+        merged_df = pd.merge(
             left=populated_timestamps_df,
             right=balloon_df,
             on=['Timestamp', 'Balloon'],
@@ -602,7 +603,7 @@ def interpolate_balloons_to_two_second_intervals(df):
         interpolated_balloon_dfs.append(merged_df)
 
     # Combine all balloons back together
-    df_interpolated = concat(interpolated_balloon_dfs, ignore_index=True)
+    df_interpolated = pd.concat(interpolated_balloon_dfs, ignore_index=True)
     return df_interpolated
 
 #df_interpolated = interpolate_balloons_to_two_second_intervals(data)
