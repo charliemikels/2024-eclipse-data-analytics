@@ -2,7 +2,7 @@ This repo is a public copy from Taylor University's GitLab. It includes scripts 
 
 See the paper _Investigating Stabilization in Lower Stratospheric Temperature and Atmospheric Gravity Waves During the April 8, 2024, Total Solar Eclipse_ for more information.
 
-The original dataset is not included. It is available on request from NearSpace Launch.
+The dataset used in this study is not included in this repo, but it is available upon request from NearSpace Education, Education center, Upland, Indiana.
 
 ## Requirements
 
